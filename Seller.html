@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="icon" href="./icon.jpeg">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="app.css">
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <script src="https://kit.fontawesome.com/92d607ead1.js" crossorigin="anonymous"></script>  
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcH5Qy8dTYdMNvQ8ufSzW9wpHY2qGhFK4&libraries=places"></script>
+    <title>DuckHawk - Online Shopping.</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.6.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.10.0/firebase-firestore.js"></script>
+  
+</head>
+<style>
+      html,body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
+}
+#map{
+  width: 100%;
+  height: 300px;
+  border-radius: 30px;
+}
+@media (min-width: 998px){
+  #map{
+    height: 480px;
+  }
+}
+ 
+</style>
+
+
+<body onload="load()">
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top" style="z-index: 16;">
+        <a class="navbar-brand" href="index.html">DuckHawk</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <!-- <a class="nav-link" href="#"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a> -->
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="sidebarCollapse"><i class="fa fa-location-arrow"></i> <span id="cityname"> Location</span>  </a>
+            </li>
+          </ul>
+          
+          <form class="form-inline my-2 my-lg-0">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#login" id="signin"> Sign in </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="myprof" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  My Profile
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#" onclick="prof()">My Profile</a>
+                  <a class="dropdown-item" href="#">My Orders</a>
+                  <!-- <div class="dropdown-divider"></div> -->
+                  <!-- <a class="dropdown-item" href="#">Wishlist</a> -->
+                  <a class="dropdown-item" href="#" onclick="logout()">Log out</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  More
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#" onclick="checkSeller()">Sell on DuckHawk</a>
+                  <a class="dropdown-item" href="#">Contact us</a>
+                  <!-- <div class="dropdown-divider"></div> -->
+                  <!-- <a class="dropdown-item" href="#">Download app</a> -->
+                </div>
+              </li>
+              <li class="nav-item">
+                <div id="cart" class="som">
+                                <a class="nav-link" href="Cart.html">
+                                  <div id="itemincart" class="cartcount" style="display: none;"></div>
+                                  <i class="fa fa-shopping-cart"></i>
+                                  Cart
+                                </a>
+                                </div>
+              </li>
+            </ul>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+
+      <div class="modal fade" id="cus_city_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Select Your City <br><p style="font-size: medium;">DuckHawk services is Available for only These Cities.</p></h5>
+              <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button> -->
+            </div>
+            <div class="modal-body">
+                <form class="px-4 py-3">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio1" name="customRadio_for_cus_city" class="custom-control-input" value="Bhubaneswar">
+                    <label class="custom-control-label" for="customRadio1">Bhubaneswar</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio6" name="customRadio_for_cus_city" class="custom-control-input" value="Cuttack">
+                    <label class="custom-control-label" for="customRadio6">Cuttack</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio2" name="customRadio_for_cus_city" class="custom-control-input" value="Bargarh">
+                    <label class="custom-control-label" for="customRadio2">Bargarh</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio7" name="customRadio_for_cus_city" class="custom-control-input" value="Sambalpur">
+                    <label class="custom-control-label" for="customRadio7">Sambalpur</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio3" name="customRadio_for_cus_city" class="custom-control-input" value="Puri">
+                    <label class="custom-control-label" for="customRadio3">Puri</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio4" name="customRadio_for_cus_city" class="custom-control-input" value="Jagatsinghpur">
+                    <label class="custom-control-label" for="customRadio4">Jagatsinghpur</label>
+                  </div>
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="customRadio5" name="customRadio_for_cus_city" class="custom-control-input" value="Berhampur">
+                    <label class="custom-control-label" for="customRadio5">Berhampur</label>
+                  </div>
+                </form>
+                <div class="dropdown-divider"></div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="SubmitCity()" id="loginbtn">Submit.</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <nav id="sidebar">
+    
+        <div class="container">
+          <div class="row">
+            <div id="dismiss">
+              <i class="fas fa-arrow-left"></i>
+          </div>
+      
+          <div class="sidebar-header">
+              <h3>Location </h3>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col-md">
+    
+              <div id="map" ></div>
+              <br>
+              <button id="getCurrent">Get Current Position</button>
+              <button id="confirmPosition">Confirm Position</button>
+              
+              <p>On idle position: <span id="onIdlePositionView"></span></p>
+              <p>On click position: <span id="onClickPositionView"></span></p>
+            </div>
+            <div class="col-md">
+                  <input class="form-control mr-sm-2" title="location" name="locationin" type="text" value="" placeholder="e.g. Delhi" aria-label="Search" id="locationin" autocomplete="off">
+            </div>
+          </div>
+        </div>
+      </nav>
+ 
+       <!--Script for Location -->
+<script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
+
+<script>
+    // Get element references
+
+    var i = 0;
+    var confirmBtn = document.getElementById('confirmPosition');
+    var onClickPositionView = document.getElementById('onClickPositionView');
+    var onIdlePositionView = document.getElementById('onIdlePositionView');
+    var map = document.getElementById('map');
+  
+    // Initialize LocationPicker plugin
+    var lp = new locationPicker(map, {
+      setCurrentPosition: true, // You can omit this, defaults to true
+    }, {
+      gestureHandling: 'greedy',
+      streetViewControl: false,
+      zoomControl: false,
+      zoom: 15 // You can set any google map options here, zoom defaults to 15
+    });
+
+  var getCur = document.getElementById('getCurrent');
+  getCur.onclick = function(){
+    lp.setCurrentPosition();
+  }
+
+  // Listen to button onclick event
+    confirmBtn.onclick = function () {
+    // Get current location and show it in HTML
+    var location = lp.getMarkerPosition();
+    onClickPositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng;
+    localStorage.setItem("Loclat",location.lat);
+    localStorage.setItem("Loclng",location.lng);
+    document.getElementById('cityname').innerHTML = (i == 2)? selectedcity[0] : cityName ;
+    $('#sidebar').toggleClass('active');
+  };
+
+  // Listen to map idle event, listening to idle event more accurate than listening to ondrag event
+  google.maps.event.addListener(lp.map, 'idle', function (event) {
+    // Get current location and show it in HTML
+    var location = lp.getMarkerPosition();
+    var latitude = location.lat;
+    var longitude = location.lng;
+    var geocoder;
+    geocoder = new google.maps.Geocoder();
+    var latlng = new google.maps.LatLng(latitude, longitude,1);
+
+
+    geocoder.geocode(
+        {'latLng': latlng}, 
+        function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              console.log(results,status)
+                if (results[0]) {
+                    var add= results[0].formatted_address ;
+                    var  value=add.split(",");
+                    count=value.length;
+                    country=value[count-1];
+                    state=value[count-2];
+                    city=value[count-3];
+                    console.log(value);
+                   console.log("city name is: " + city);
+                   onIdlePositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng+" "+results[0].formatted_address ;
+
+                   cityName = results[0].formatted_address ;
+                   console.log(cityName);
+                   i = i*2;
+                   document.getElementById('cityname').innerHTML = (i == 2)? selectedcity[0] : cityName ;
+
+                   var m = new google.maps.Map(document.getElementById('m'), {
+                          center: latlng,
+                          zoom: 1
+                        });
+
+                  // var service = new google.maps.places.PlacesService(m);
+                  // service.nearbySearch({
+                  //   location: latlng,
+                  //   // rankBy: google.maps.places.RankBy.DISTANCE,
+                  //   radius: '50',
+                  //   types: ["establishment"],
+                  //   types: ['address']
+                  // }, function(results, status) {
+                  //   if (status === google.maps.places.PlacesServiceStatus.OK) {
+                  //     // for (var i = 0; i < results.length; i++) {
+                  //     // //  console.log(results[i])
+                  //     // }
+                  //     cityName = results[0];
+                  //     console.log(cityName);
+                  //   } else {
+                  //     alert('nearbySearch was not successful for the following reason: ' + status);
+                  //   }
+                  // });
+                }
+                else  {
+                    console.log("address not found");
+                }
+            }
+            else {
+                console.log("Geocoder failed due to: " + status);
+            }
+        }
+    );
+  });
+
+
+  var selectedcity ;
+  var lat;
+  var lng;
+
+var autocomplete = new google.maps.places.Autocomplete(
+      /** @type {!HTMLInputElement} */ (
+          document.getElementById('locationin')), {
+        types: ['address'],types : ['establishment'],
+      });
+      google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        var place = autocomplete.getPlace();
+        console.log("place name is "+place.name);
+        selectedcity = place.name.split(',');
+        i = 1 ;
+        document.getElementById('cityname').innerHTML = selectedcity[0] ; 
+        var geocoder;
+      geocoder = new google.maps.Geocoder();
+        geocoder.geocode( { 'address': selectedcity[0] }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+
+      console.log("Latitude: "+results[0].geometry.location.lat());
+      console.log("Longitude: "+results[0].geometry.location.lng());
+        lp.setLocation(results[0].geometry.location.lat(),results[0].geometry.location.lng());
+      } 
+
+      else {
+        alert("Geocode was not successful for the following reason: " + status);
+      }
+    });
+        // $('#sidebar').toggleClass('active');
+  });
+
+
+  function onReloadLocation(){
+    if(localStorage.getItem('Loclat')){
+      lp.setLocation(localStorage.getItem('Loclat'),localStorage.getItem('Loclng'))
+    }else{
+      alert("Set your Location..!")
+    }
+    
+    // confirmBtn.click();
+  }
+
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+  <script type="text/javascript">
+
+    $(document).ready(function () {
+      
+        $('#dismiss, .overlay').on('click', function () {
+            $('#sidebar').removeClass('active');
+        });
+
+        $('#sidebarCollapse').on('click', function () {
+            // $('#sidebar').toggleClass('active');
+            $('.navbar-toggler').click();
+        });
+    });
+</script>
+
+<div id="m"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form class="px-4 py-3">
+                <div class="form-group">
+                  <label for="email">Email address</label>
+                  <input type="email" class="form-control" placeholder="Enter Email" name="email" required id="lemail" autocomplete="off" value="">
+                </div>
+                <div class="form-group">
+                  <label for="psw">Password</label>
+                  <input type="password" class="form-control" placeholder="Enter Password" name="psw" required id="lpassword">
+                </div>
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="dropdownCheck">
+                  <label class="form-check-label" for="dropdownCheck">
+            Remember me
+          </label>
+                </div>
+                    </form>
+                    <div class="dropdown-divider"></div>
+         <a class="dropdown-item" data-toggle="modal" data-target="#forget" data-dismiss="modal">Forgot password?</a>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="login()" id="loginbtn">Login</button>
+            <button type="button" class="btn btn-secondary"  data-toggle="modal" data-target="#signup" data-dismiss="modal" >Sign up</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Forgot Password modal-->
+  <div class="modal fade" id="forget" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Reset Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form class="px-4 py-3">
+                <div class="form-group">
+                  <label for="exampleDropdownFormEmail1">Email</label>
+                  <input type="email" class="form-control" placeholder="email" id="useremail">
+                </div>
+                    </form>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="resetPass()">Send password reset link</button>
+            <!-- <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#login" data-dismiss="modal">Login</button> -->
+            
+          
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+  <!-- signup -->
+  <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Sign up</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <form class="px-4 py-3">
+            <div class="form-group">
+              <label for="exampleDropdownFormEmail1">Name</label>
+              <input type="text" class="form-control" name="name" placeholder="Enter your name" id="name" required>
+            </div>
+              <div class="form-group">
+                <label for="exampleDropdownFormEmail1">Email</label>
+                <input type="email" class="form-control" name="Email" placeholder="Enter your email" id="email" required>
+              </div>
+              <div class="form-group">
+                <label for="exampleDropdownFormPassword1">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="Enter new password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+              </div>
+              <div class="form-group">
+                <label for="exampleDropdownFormPassword1">Phone Number</label>
+                <input type="tel" class="form-control" name="number" id="phonenumber" required placeholder="Enter phone number">
+              </div>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input">
+                <label class="form-check-label" for="dropdownCheck">
+          Remember me
+        </label>
+              </div>
+                  </form>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="signup()" id="signupbutton">Sign up</button>
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#login" data-dismiss="modal">Login</button>
+          
+        
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+
+
+  <div class="container" style="margin-top: 20vh;">
+
+    <div id="before">
+
+      <p>
+        You are not a seller on DuckHawk.<br>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#contentId" aria-expanded="false"
+            aria-controls="contentId">
+          Apply for Seller
+        </button>
+      </p>
+      <div class="collapse" id="contentId">
+        <form class="needs-validation" novalidate action="javascript:void(0);" >
+          <div class="form-row">
+              <div class="form-group col-sm-6">
+                  <label for="shopname">Shop Name</label>
+                  <input type="text" class="form-control" id="shopname" placeholder="Shop Name" required>
+                </div>
+              <div class="form-group col-sm-6">
+                <label for="inputEmail4">Email</label>
+                <input type="email" class="form-control" id="inputEmail4" placeholder="Email" required>
+                <div class="invalid-feedback">
+                  Please provide your Email id.
+                </div>
+                <div class="valid-feedback">
+                  
+                </div>
+              </div>
+            </div>
+  
+            <div class="form-row">
+              <div class="form-group col-sm-6">
+                  <label for="ownername">Owner Name</label>
+                  <input type="text" class="form-control" id="ownername" placeholder="Owner Name" required>
+                </div>
+              <div class="form-group col-sm-6">
+                <label for="ownernumber">Contact Number</label>
+                <input type="tel" class="form-control" id="ownernumber" placeholder="Contact Number" required>
+                <div class="invalid-feedback">
+                  Please give your number 
+                </div>
+                
+              </div>
+            </div>
+  
+            <div class="form-row">
+              <div class="form-group col-sm-6">
+                  <label for="managername">Manager Name</label>
+                  <input type="text" class="form-control" id="managername" placeholder=" Name" required>
+                </div>
+              <div class="form-group col-sm-6">
+                <label for="managernumber">Contact Number</label>
+                <input type="tel" class="form-control" id="managernumber" placeholder="Contact Number" required>
+                <div class="invalid-feedback">
+                  Please give your number 
+                </div>
+               
+              </div>
+            </div>
+  
+            <div class="form-group">
+              <label for="gstnum">Aadhar No.</label>
+              <input type="text" class="form-control" id="gstnum" placeholder="Enter your Aadhar Number" required>
+            </div>
+
+            <!-- <div class="form-row">
+              <div class="form-group col-sm-7">
+                Upoad Your GST certificate...
+              </div>
+              <div class="form-group col-sm-5">
+                  <input type="file" class="form-control-file" id="exampleFormControlFile2" required>
+                </div>
+          </div> -->
+
+
+
+  
+            <div class="form-group">
+              <label for="inputAddress">Address</label>
+              <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
+            </div>
+            <div class="form-group">
+              <label for="inputAddress2">Address 2</label>
+              <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="inputCity">City</label>
+                <select id="inputCity" class="form-control" required>
+                  <option selected>Bhubaneswar</option>
+                  <option>Cuttack</option>
+                  <option>Jagatsinghpur</option>
+                  <option>Berhampur</option>
+                  <option>Rourkela</option>
+                  <option>Bargarh</option>
+                  <option>Sambalpur</option>
+                </select>
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="inputState">State</label>
+                <input type="text" class="form-control" id="inputState" required>
+              </div>
+              <div class="form-group col-sm-6">
+                <label for="inputZip">Zip</label>
+                <input type="number" class="form-control" id="inputZip" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="inputCat">Category</label>
+                <select id="inputCat" class="form-control" required>
+                  <option selected>Electronics</option>
+                  <option>Grocery</option>
+                  <option>Furniture</option>
+                  <option>Mobile</option>
+                  <option>Clothing</option>
+                  <option>Computer</option>
+                </select>
+              </div>
+            </div>
+  
+  
+            <div class="form-row">
+                <div class="form-group col-sm-7">
+                  Do you have more than one shop ?
+                </div>
+              <div class="form-group col-sm-3">
+                  <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="mulipleshop" id="mulipleshop" value="yes" required onclick="myFunction(this.value)">
+                      <label class="form-check-label" for="Yes">Yes</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="mulipleshop" id="mulipleshop" value="no" onclick="myFunction(this.value)">
+                      <label class="form-check-label" for="no">No</label>
+                    </div>
+                </div>
+
+            </div>
+
+             
+
+  
+            <!-- <div class="form-row">
+              <div class="form-group col-sm-7">
+                Share your shop photo ..
+              </div>
+              <div class="form-group col-sm-5">
+                  <input type="file" class="form-control-file" id="exampleFormControlFile1" required>
+                </div>
+          </div> -->
+            
+            <button  class="btn btn-primary" onclick="myfun()">Submit for verification</button>
+            </form>
+
+
+      </div>
+
+
+    
+    </div>
+  <div id="after" style="display: none;">Your application was submitted.</div>
+  </div>
+  
+  <script src="./app.js"></script>
+
+  
+  <script>
+    isApplied();
+
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active'); 
+            $(this).toggleClass('active');
+        });
+    });
+
+    var bool=false;
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function() {
+    'use strict';
+
+    window.addEventListener('load', function() {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            console.log("HERE");
+            form.focus();
+          }
+          form.classList.add('was-validated');
+          bool = form.checkValidity();
+          console.log("HERE",bool);
+          myfun();
+          if(!bool){
+            alert("Please Fill All the Details.")
+          }
+        }, false);
+        console.log("HERE",bool);
+      });
+      console.log("HERE",bool);
+    }, false);
+
+  })();
+
+
+  function myfun(){
+      if(bool){
+          console.log('clicked');
+          Submit();
+          
+      }
+      else
+          console.log('Not clicked');
+  }
+
+  </script>
+ 
+<div w3-include-html="./footer.html"></div>
+<script>
+    includeHTML();
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="icon" href="./icon.jpeg">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="app.css">
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"
+    integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+  <script src="https://kit.fontawesome.com/92d607ead1.js" crossorigin="anonymous"></script>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcH5Qy8dTYdMNvQ8ufSzW9wpHY2qGhFK4&libraries=places"></script>
+  <title>DuckHawk - Online Shopping.</title>
+  <script src="https://www.gstatic.com/firebasejs/6.6.0/firebase.js"></script>
+  <!-- <link href="profile.css" rel="stylesheet"> -->
+
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+      overflow-x: hidden;
+      background-color: rgb(255, 255, 255);
+    }
+  </style>
+
+</head>
+
+<body onload="profile()">
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-white border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Hey! </div>
+      <div class="list-group list-group-flush">
+        <a href="#orders" class="list-group-item list-group-item-action bg-white">Your Orders</a>
+        <a href="#" class="list-group-item list-group-item-action bg-white"> Wishlist</a>
+        <!-- <a href="#" class="list-group-item list-group-item-action bg-white">Overview</a> -->
+        <!-- <a href="#" class="list-group-item list-group-item-action bg-white">Events</a> -->
+        <!-- <a href="#" class="list-group-item list-group-item-action bg-white">Profile</a> -->
+        <a href="#" class="list-group-item list-group-item-action bg-white" onclick="logout()">Log out</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom"> -->
+      <!-- MY NAV -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <button class="btn btn-primary" id="menu-toggle"><i class="fa fa-bars"></i></button>
+        <!-- <a class="navbar-brand" href="index.html"> &nbsp; DuckHawk</a> -->
+        <a class="navbar-brand" href="#" id="sidebarCollapse"><i class="fa fa-location-arrow"></i> <span id="cityname">
+          Location</span> </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <!-- <a class="nav-link" href="#"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a> -->
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/"> &nbsp; DuckHawk</a>
+              <!-- <a class="nav-link" href="#" id="sidebarCollapse"><i class="fa fa-location-arrow"></i> <span
+                  id="cityname"> Location</span> </a> -->
+            </li>
+          </ul>
+
+          <form class="form-inline my-2 my-lg-0">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#login" id="signin"> Sign in </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="myprof" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  My Profile
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#" onclick="prof()">My Profile</a>
+                  <a class="dropdown-item" href="#">My Orders</a>
+                  <!-- <div class="dropdown-divider"></div> -->
+                  <!-- <a class="dropdown-item" href="#">Wishlist</a> -->
+                  <a class="dropdown-item" href="#" onclick="logout()">Log out</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  More
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="https://seller.duckhawk.in">Sell on DuckHawk</a>
+                  <a class="dropdown-item" href="#">Contact us</a>
+                  <!-- <div class="dropdown-divider"></div> -->
+                  <!-- <a class="dropdown-item" href="#">Download app</a> -->
+                </div>
+              </li>
+              <li class="nav-item">
+                <div id="cart" class="som">
+                  <a class="nav-link" href="Cart.html">
+                    <div id="itemincart" class="cartcount" style="display: none;"></div>
+                    <i class="fa fa-shopping-cart"></i>
+
+                    Cart
+
+                  </a>
+                </div>
+
+              </li>
+            </ul>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+      <!-- My NAV -->
+
+      <div class="container-fluid" style="overflow-y: scroll;height: calc(100vh - 56px);">
+        <div style="height: 100vh;">
+          <h1 class="mt-4">Welcome to DuckHawk</h1>
+          <!-- <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
+          <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p> -->
+          <h3>Name : <span id="name"></span></h3>
+          <h3>Email : <span id="email"></span></h3>
+          <h3>Mobile : <span id="mobile"></span></h3>
+          <hr>
+          <button type="button" class="btn btn-warning">Change Password</button>
+          <button type="button" class="btn btn-danger">Deactivate account</button>
+          <h3></h3>
+          <div class="container" id="orders" style="min-height: 100vh;background-color: black;color: white;">
+            <!-- <div class="row eachorder"  id="oid" >
+              <div class="col-lg-7 col-md-7 col-sm">
+              Order ID:  -M72Bw3thgQ9MqFWeFTy <br>
+              Delevery Charge : 75 
+              Total : 
+              </div>
+              <div class="col-lg-5 col-md-5 col-sm">
+                3:37:02 PM , 5/11/2020 <br>
+                Bhubaneswar
+              </div>
+              <div class="container" id="-M72Bw3thgQ9MqFWeFTy">
+                <div class="row">
+                  Products : ...
+                </div>
+              <div class="row" id="eachproduct">
+              <div class="col-lg-7 col-md-7 col-sm">
+              jfj <br>
+              </div>  
+              <div class="col-lg-5 col-md-5 col-sm">
+              Price : 55 ,
+              Quantity :  1
+              </div>
+              </div>
+              
+              <div class="row" id="eachproduct">
+              <div class="col-lg-7 col-md-7 col-sm">
+              Electrosac Es- 7200 Tower speaker <br>
+              
+              </div>  
+              <div class="col-lg-5 col-md-5 col-sm">
+              Price : 6999 ,
+              Quantity :  2
+              </div>
+              </div>
+            </div>
+              </div> -->
+
+          </div>
+          <div w3-include-html="./footer.html" id="last"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <!-- <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+
+  <!-- Menu Toggle Script -->
+  <script src="app.js"></script>
+  <script>
+    includeHTML();
+    $("#menu-toggle").click(function (e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+    showOrder()
+  </script>
+
+  <!--MODAL FOR LOGIN -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="px-4 py-3">
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" placeholder="Enter Email" name="email" required id="lemail"
+                autocomplete="off" value="">
+            </div>
+            <div class="form-group">
+              <label for="psw">Password</label>
+              <input type="password" class="form-control" placeholder="Enter Password" name="psw" required
+                id="lpassword">
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="dropdownCheck">
+              <label class="form-check-label" for="dropdownCheck">
+                Remember me
+              </label>
+            </div>
+          </form>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" data-toggle="modal" data-target="#forget" data-dismiss="modal">Forgot
+            password?</a>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="login()" id="loginbtn">Login</button>
+          <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#signup"
+            data-dismiss="modal">Sign up</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Forgot Password modal-->
+  <div class="modal fade" id="forget" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Reset Password</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="px-4 py-3">
+            <div class="form-group">
+              <label for="exampleDropdownFormEmail1">Email</label>
+              <input type="email" class="form-control" placeholder="email" id="useremail">
+            </div>
+          </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="resetPass()">Send password reset
+              link</button>
+            <!-- <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#login" data-dismiss="modal">Login</button> -->
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- signup -->
+  <div class="modal fade" id="signup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Sign up</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form class="px-4 py-3">
+            <div class="form-group">
+              <label for="exampleDropdownFormEmail1">Name</label>
+              <input type="text" class="form-control" name="name" placeholder="Enter your name" id="name" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleDropdownFormEmail1">Email</label>
+              <input type="email" class="form-control" name="Email" placeholder="Enter your email" id="email" required>
+            </div>
+            <div class="form-group">
+              <label for="exampleDropdownFormPassword1">Password</label>
+              <input type="password" class="form-control" name="password" placeholder="Enter new password" id="password"
+                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="exampleDropdownFormPassword1">Phone Number</label>
+              <input type="tel" class="form-control" name="number" id="phonenumber" required
+                placeholder="Enter phone number">
+            </div>
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input">
+              <label class="form-check-label" for="dropdownCheck">
+                Remember me
+              </label>
+            </div>
+          </form>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="signup()" id="signupbutton">Sign
+              up</button>
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#login"
+              data-dismiss="modal">Login</button>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- CODE FOR LOCATION -->
+
+
+  <nav id="sidebar">
+
+    <div class="container">
+      <div class="row">
+        <div id="dismiss">
+          <i class="fas fa-arrow-left"></i>
+        </div>
+
+        <div class="sidebar-header">
+          <h5>Set Your Location</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md" style="margin: 10px 0px;">
+          <input class="form-control mr-sm-2" title="location" name="locationin" type="text" value=""
+            placeholder="e.g. Delhi" aria-label="Search" id="locationin" autocomplete="off">
+          <div class="hide">
+            <p id="stext">You can sreach here for area, street name, city, mantions, etc.... <br>Other wise you can give
+              your
+              current location from picking the location from the Map below.</p>
+            <p>On idle position: <span id="onIdlePositionView"></span></p>
+            <p>On click position: <span id="onClickPositionView"></span></p>
+          </div>
+        </div>
+        <div class="col-md">
+
+          <div id="map"></div>
+          <br>
+          <button id="getCurrent">Get Current Position</button>
+          <button id="confirmPosition">Confirm Position</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+  <!--Script for Location -->
+  <script src="https://unpkg.com/location-picker/dist/location-picker.min.js"></script>
+
+
+  <script>
+    // Get element references
+
+    var i = 0;
+    var confirmBtn = document.getElementById('confirmPosition');
+    var onClickPositionView = document.getElementById('onClickPositionView');
+    var onIdlePositionView = document.getElementById('onIdlePositionView');
+    var map = document.getElementById('map');
+
+    // Initialize LocationPicker plugin
+    var lp = new locationPicker(map, {
+      setCurrentPosition: true, // You can omit this, defaults to true
+    }, {
+      gestureHandling: 'greedy',
+      streetViewControl: false,
+      zoomControl: false,
+      zoom: 15 // You can set any google map options here, zoom defaults to 15
+    });
+
+    var getCur = document.getElementById('getCurrent');
+    getCur.onclick = function () {
+      lp.setCurrentPosition();
+    }
+
+    function reload() {
+      location.reload();
+    }
+
+    // Listen to button onclick event
+    confirmBtn.onclick = function () {
+      // Get current location and show it in HTML
+      var location = lp.getMarkerPosition();
+      onClickPositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng;
+      localStorage.setItem("Loclat", location.lat);
+      localStorage.setItem("Loclng", location.lng);
+      document.getElementById('cityname').innerHTML = localStorage.cus_city_tobe;
+      localStorage.setItem('cus_city', localStorage.cus_city_tobe);
+      // document.getElementById('cityname').innerHTML = (i == 2) ? selectedcity[0] : cityName;
+      $('#sidebar').toggleClass('active');
+      setTimeout(() => {
+        reload();
+      }, 30)
+    };
+
+    // Listen to map idle event, listening to idle event more accurate than listening to ondrag event
+    google.maps.event.addListener(lp.map, 'idle', function (event) {
+      // Get current location and show it in HTML
+      var location = lp.getMarkerPosition();
+      var latitude = location.lat;
+      var longitude = location.lng;
+      var geocoder;
+      geocoder = new google.maps.Geocoder();
+      var latlng = new google.maps.LatLng(latitude, longitude, 1);
+
+
+      document.getElementById('cityname').innerHTML = localStorage.cus_city;
+
+      geocoder.geocode(
+        { 'latLng': latlng },
+        function (results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            // console.log(results, status)
+            if (results[0]) {
+              var add = results[0].formatted_address;
+              var value = add.split(",");
+              count = value.length;
+              country = value[count - 1];
+              state = value[count - 2];
+              city = value[count - 3];
+              console.log(value);
+              console.log("city name is: " + city);
+
+              localStorage.setItem('cus_city_tobe', $.trim(city));
+
+              onIdlePositionView.innerHTML = 'The chosen location is ' + location.lat + ',' + location.lng + " " + results[0].formatted_address;
+
+              cityName = results[0].formatted_address;
+              console.log(cityName);
+              i = i * 2;
+
+              var m = new google.maps.Map(document.getElementById('m'), {
+                center: latlng,
+                zoom: 1
+              });
+
+              // var service = new google.maps.places.PlacesService(m);
+              // service.nearbySearch({
+              //   location: latlng,
+              //   // rankBy: google.maps.places.RankBy.DISTANCE,
+              //   radius: '50',
+              //   types: ["establishment"],
+              //   types: ['address']
+              // }, function(results, status) {
+              //   if (status === google.maps.places.PlacesServiceStatus.OK) {
+              //     // for (var i = 0; i < results.length; i++) {
+              //     // //  console.log(results[i])
+              //     // }
+              //     cityName = results[0];
+              //     console.log(cityName);
+              //   } else {
+              //     alert('nearbySearch was not successful for the following reason: ' + status);
+              //   }
+              // });
+            }
+            else {
+              console.log("address not found");
+            }
+          }
+          else {
+            console.log("Geocoder failed due to: " + status);
+          }
+        }
+      );
+    });
+
+
+    var selectedcity;
+    var lat;
+    var lng;
+
+    var ppp;
+    var autocomplete = new google.maps.places.Autocomplete(
+          /** @type {!HTMLInputElement} */(
+        document.getElementById('locationin')), {
+      types: ['address'], types: ['establishment'],
+    });
+    google.maps.event.addListener(autocomplete, 'place_changed', function () {
+      var place = autocomplete.getPlace();
+      ppp = place;
+      console.log("place name is ", place);
+      selectedcity = place.name.split(',');
+      i = 1;
+      // document.getElementById('cityname').innerHTML = selectedcity[0];
+      lp.setLocation(place.geometry.location.lat(), place.geometry.location.lng());
+    });
+
+
+    function onReloadLocation() {
+      if (localStorage.getItem('Loclat')) {
+        lp.setLocation(localStorage.getItem('Loclat'), localStorage.getItem('Loclng'))
+        document.getElementById("dismiss").style.display = "block"
+      } else {
+        alert("Set your Location..!")
+        document.getElementById("dismiss").style.display = "none"
+      }
+    }
+
+  </script>
+
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+  <script type="text/javascript">
+
+    $(document).ready(function () {
+
+      $('#dismiss, .overlay').on('click', function () {
+        $('#sidebar').removeClass('active');
+      });
+
+      $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').addClass('active');
+        // locationauto();
+      });
+    });
+  </script>
+
+
+
+  <div class="m"></div>
+
+</body>
+
+</html>

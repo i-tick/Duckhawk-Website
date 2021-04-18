@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="icon" href="./icon.jpeg">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="app.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+  <script src="https://kit.fontawesome.com/92d607ead1.js" crossorigin="anonymous"></script>  
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcH5Qy8dTYdMNvQ8ufSzW9wpHY2qGhFK4&libraries=places"></script>
+  <title>DuckHawk - Online Shopping.</title>
+  <script src="https://www.gstatic.com/firebasejs/6.6.0/firebase.js"></script>
+ 
+<script>
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyBGdT1NqdlmpGM7nt5cIKI2ypE-OTQnqz8",
+    authDomain: "duckhawk-1699a.firebaseapp.com",
+    databaseURL: "https://duckhawk-1699a.firebaseio.com", 
+    projectId: "duckhawk-1699a",
+    storageBucket: "duckhawk-1699a.appspot.com",
+    messagingSenderId: "310324939369",
+    appId: "1:310324939369:web:c290e9fdf3a88b4bb930f8",
+    measurementId: "G-Y3CR0HNHNW"
+  };
+
+
+</script>
+
+<style>
+    @media (min-width: 768px) { 
+        #pimg{
+  position: sticky;
+  top: 10px;
+}
+ }
+</style>
+
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="./">DuckHawk</a>
+    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
+  </nav>
+
+  <!--   
+    <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fa fa-tag"></i><span class="hide"> All categories</span>  </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fa fa-plug"></i> <span class="hide"> Electronics</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fa fa-tv"></i> <span class="hide"> TV and Applicances</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fa fa-tshirt"></i> <span class="hide"> Clothing</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fa fa-chair"></i><span class="hide"> Home and Furniture</span> </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fa fa-football-ball"></i> <span class="hide"> Sports</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fa fa-book"></i><span class="hide"> Books</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"><i class="fa fa-gift"></i> <span class="hide"> Offers</span></a>
+      </li>
+    </ul> -->
+
+    <div class="wrapper" id="locbox" style="position: absolute;z-index: 1;">
+      <nav id="sidebar">
+          <div class="sidebar-header">
+              <h3>Location</h3>
+          </div>
+              <input class="form-control mr-sm-2" title="location" name="locationin" type="text" value="" placeholder="e.g. Delhi" aria-label="Search" id="locationin" autocomplete="off">
+          <ul class="list-unstyled CTAs">
+              <li>
+                  <a href="#" class="download">Get current location</a>
+              </li>
+          </ul>
+      </nav>
+  </div>
+
+  <!--Display Only one Product-->
+  <div class="spinner-3" id="spinner1"></div>
+  <div class="container productdiv">
+      <div class="row">
+        <div class="col-lg-5 col-md-6" id="pimg" style="background-color: rgb(255, 255, 255);">
+            <img src="" alt="img" id="prodimg" style="visibility: hidden;">
+        </div>
+        <div class="col-lg-7 col-md-6" id="pdes">
+            
+        </div>
+      </div>
+  </div>
+  <div w3-include-html="./footer.html"></div>
+  <script src="./location.js"></script>
+  <script src="./app.js"></script>
+ <script src="./app2.js"></script>
+ <script>
+    includeHTML();
+ </script>
+</body>
+</html>

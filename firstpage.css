@@ -1,0 +1,109 @@
+#inputs{
+    background-color: white;
+    padding: 20px;
+}
+#mapcont{
+    height: 50vh;
+    padding: 0px;
+}
+#main{
+    padding:10px;
+    background-color: white;
+}
+#map{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+@media (min-width: 768px) {
+    body {
+        overflow-y: hidden;
+    }
+    #inputs{
+        height: 100vh;
+    }
+    #map,.askp,.scrn{
+        border-top-left-radius: 45vh;
+        border-bottom-left-radius: 45vh;
+    }
+    #mapcont{
+        box-shadow: 10px 10px 10px 10px rgb(204, 204, 204),
+                20px 20px 20px 20px rgb(204, 204, 204),
+                50px 50px 50px 20px rgb(204, 204, 204);
+        border:3px solid #213556;
+        height: 90vh;
+        border-top-left-radius: 45vh;
+        border-bottom-left-radius: 45vh;
+    }
+
+    .btnbox{
+        border-top-left-radius: 50px;
+        border-bottom-left-radius:50px;
+    }
+    #stext{
+        color: black;
+    }
+}
+
+@media (max-width: 767px){
+    #inputs{
+       padding-bottom: 10vh;
+       border-bottom-left-radius: 30%;
+       border-bottom-right-radius: 30%;
+       border-bottom:1px double #213556;
+       box-shadow: 1px 1px 10px black;
+       background-color: #213556;
+    }
+    #mapcont{
+        margin: 25px;
+        border-radius: 10%;
+        border: 1px solid #213556;
+    }
+    #main{
+        padding-top: 0px;
+    }
+    #map,.askp,.scrn{
+        border-radius: 10%; 
+    }
+
+    .btnbox{
+        border-radius: 10px;
+    }
+    #stext{
+        color: white;
+    }
+
+
+}
+
+.askp{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 6;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.scrn{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    z-index: 5;
+    background-color: rgb(182, 185, 185);
+    opacity: 0.7;
+    overflow: hidden;
+}
+
+.btnbox{
+    padding: 5px;
+    background-color: white;
+    font-size: xx-large;
+    opacity: 1;
+    pointer-events: painted;
+}

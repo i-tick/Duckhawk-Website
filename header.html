@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="icon" href="./icon.jpeg">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="app.css">
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script> -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+  <script src="https://kit.fontawesome.com/92d607ead1.js" crossorigin="anonymous"></script>  
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCcH5Qy8dTYdMNvQ8ufSzW9wpHY2qGhFK4&libraries=places"></script>
+  <title>DuckHawk - Online Shopping.</title>
+  <script src="https://www.gstatic.com/firebasejs/6.6.0/firebase.js"></script>
+
+</head>
+<body onload="checkAuth()">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html">DuckHawk</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+    
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <!-- <a class="nav-link" href="#"><i class="fa fa-home"></i> Home <span class="sr-only">(current)</span></a> -->
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="sidebarCollapse"><i class="fa fa-location-arrow"></i> <span id="cityname"> Location</span>  </a>
+            </li>
+          </ul>
+          
+          <form class="form-inline my-2 my-lg-0">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#login" id="signin"> Sign in </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="myprof" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  My Profile
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="profile.html">My Profile</a>
+                  <a class="dropdown-item" href="#">My Orders</a>
+                  <!-- <div class="dropdown-divider"></div> -->
+                  <!-- <a class="dropdown-item" href="#">Wishlist</a> -->
+                  <a class="dropdown-item" href="#" onclick="logout()">Log out</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  More
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">Sell on DuckHawk</a>
+                  <a class="dropdown-item" href="#">Contact us</a>
+                  <!-- <div class="dropdown-divider"></div> -->
+                  <!-- <a class="dropdown-item" href="#">Download app</a> -->
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fa fa-shopping-cart"></i> Cart </a>
+              </li>
+            </ul>
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          </form>
+        </div>
+      </nav>
+      
+        <ul class="nav nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" href="#" title="All categories"><i class="fa fa-tag"></i><span class="hide"> All categories</span>  </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" title="Electronics"><i class="fa fa-tv"></i> <span class="hide"> Electronics</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" title="Electricals"><i class="fa fa-plug"></i> <span class="hide"> Electricals</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" title="Clothing"><i class="fa fa-tshirt"></i> <span class="hide"> Clothing</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" title="Home and Furniture"><i class="fa fa-chair"></i><span class="hide"> Home and Furniture</span> </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" title="Sports"><i class="fa fa-football-ball"></i> <span class="hide"> Sports</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" title="Books"><i class="fa fa-book"></i><span class="hide"> Books</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" title="Grocery"><i class="fa fa-shopping-basket"></i> <span class="hide"> Grocery</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" title="Stores near me"><i class="fa fa-store-alt"></i> <span class="hide"> Stores near me</span></a>
+          </li>
+        </ul>
+        <div class="wrapper" id="locbox" style="position: absolute;z-index: 1;">
+          <nav id="sidebar">
+              <div class="sidebar-header">
+                  <h3>Location 
+                    <button type="button" class="close" id="closebutton" onclick="closeLoc()">
+                    <span aria-hidden="true">&times;</span>
+                  </button></h3>
+              </div>
+    
+                  <input class="form-control mr-sm-2" title="location" name="locationin" type="text" value="" placeholder="e.g. Delhi" aria-label="Search" id="locationin" autocomplete="off">
+              <ul class="list-unstyled CTAs">
+                  <li>
+                      <a onclick="locationauto()" class="download">Get current location</a>
+                  </li>
+              </ul>
+          </nav>
+      </div>
+
+
+
+      <!-- Footer -->
+      <script>
+        var selectedcity ;
+        var lat;
+        var lng;
+        function locationauto(){
+            if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+            }else { 
+              console.log("Error,Geolocation is not supported by this browser");
+            // x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+          }
+          function showPosition(position) {
+            lat = position.coords.latitude;
+            lng = position.coords.longitude;
+          console.log("Latitude: " + position.coords.latitude + 
+          "\nLongitude: " + position.coords.longitude);
+          displayLocation(lat,lng);
+          
+        }
+      
+      var autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */ (
+                document.getElementById('locationin')), {
+              types: ['(cities)'],
+            });
+            google.maps.event.addListener(autocomplete, 'place_changed', function() {
+              var place = autocomplete.getPlace();
+              console.log("place name is "+place.name);
+              selectedcity = place.name.split(',');
+              document.getElementById('cityname').innerHTML = selectedcity[0] ; 
+             // var numItems = $(".pac-item").length;
+             // console.log(numItems);
+              $('#sidebar').toggleClass('active');
+              //document.getElementById('sidebar').style.width = "0px";
+              });
+      
+      
+              function displayLocation(latitude,longitude){
+          var geocoder;
+          geocoder = new google.maps.Geocoder();
+          var latlng = new google.maps.LatLng(latitude, longitude);
+      
+          geocoder.geocode(
+              {'latLng': latlng}, 
+              function(results, status) {
+                  if (status == google.maps.GeocoderStatus.OK) {
+                      if (results[0]) {
+                          var add= results[0].formatted_address ;
+                          var  value=add.split(",");
+                          count=value.length;
+                          country=value[count-1];
+                          state=value[count-2];
+                          city=value[count-3];
+                         console.log("city name is: " + city);
+                      }
+                      else  {
+                          console.log("address not found");
+                      }
+                  }
+                  else {
+                      console.log("Geocoder failed due to: " + status);
+                  }
+              }
+          );
+      }   
+      </script>
+       <script src="app.js"></script>
+      </body>
+      </html>

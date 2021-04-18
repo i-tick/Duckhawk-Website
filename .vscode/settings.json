@@ -1,0 +1,9 @@
+{
+    "liveServer.settings.port": 5502,
+    "liveServer.settings.https": {
+        "enable": false, //set it true to enable the feature.
+        "cert": "E:\\Git\\DuckHawk\\https\\server.crt", //full path
+        "key": "E:\\Git\\DuckHawk\\https\\server.key", //full path
+        "passphrase": "12345"
+    },
+}

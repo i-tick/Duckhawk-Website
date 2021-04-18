@@ -1,0 +1,86 @@
+body{
+    background-color: white;
+}
+
+.mainbox{
+    /* background-color: aqua; */
+    padding: 0px 5%;
+}
+
+.sidebar{
+    /* background-color: rgb(177, 177, 228); */
+    padding: 30px;
+    width: 100%;
+    list-style-type:none;
+    border-right: 10px double #213556;
+}
+
+.mainbox li{
+    padding: 5px;
+    width: 100%;
+    justify-items: center;
+    border-bottom: 1px dotted black;
+    font-size:20px; line-height:25px; margin-left:0;
+}
+
+.mainbox li:hover {
+    background-color: #213556;
+    color: white;
+}
+.userdata{
+    padding: 50px;
+    width: 100%;
+    
+}
+
+#cartitem{
+    padding: 20px;
+    
+}
+#cartitem td{
+    width: 30%;
+}
+
+#cartitem td button{
+    margin-left: 30% ;
+    background-color: white;
+    margin: 10px;
+    border: 1px solid rgb(219, 100, 21);
+    width: 50%;
+    height: 30px;
+    border-radius: 10px;
+    background-color: rgb(252, 132, 53);
+    font-size: medium;
+    color: #ffffff;
+}
+#total{
+    padding-right: 50px;
+    text-align: right;
+}
+
+#pc{
+    width: 100%;
+    padding: 5%;;
+}
+
+#pc a{
+    position: relative;
+    left: 90%;
+    background-color: white;
+    border: 1px solid rgb(219, 100, 21);
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgb(252, 132, 53);
+    font-size: large;
+    color: #ffffff;
+}
+
+#pc textarea{
+    border: 1px solid black;
+    outline: none;
+}
+
+
+.Ostatus{
+    margin-left: 10px;
+}
